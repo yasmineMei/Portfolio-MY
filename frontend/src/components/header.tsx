@@ -1,9 +1,14 @@
- import { useState, useEffect } from "react";
-import { X  } from "lucide-react";
-import { FaMailBulk, FaHome, FaBookOpen, FaUser, FaBriefcase, FaBuilding  } from "react-icons/fa";
-
+import { useState, useEffect } from "react";
+import { X } from "lucide-react";
+import {
+  FaMailBulk,
+  FaHome,
+  FaBookOpen,
+  FaUser,
+  FaBriefcase,
+  FaBuilding,
+} from "react-icons/fa";
 import { Link } from "@tanstack/react-router";
-
 import Logo from "../images/logo.png";
 
 const navItems = [
@@ -11,13 +16,57 @@ const navItems = [
   { label: "À Propos", href: "/about" },
   { label: "Projets", href: "/projet" },
   { label: "Education", href: "/education" },
-  { label: "Experience", href: "/experience"},
+  { label: "Experience", href: "/experience" },
   { label: "Contact", href: "/contact" },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Fonction corrigée pour le téléchargement du CV
+  const handleDownloadCV = () => {
+    try {
+      // Si le fichier est dans public/assets/doc/
+      const cvUrl = "/assets/doc/CV_yasmine.pdf";
+
+      // Créer un lien temporaire
+      const link = document.createElement("a");
+      link.href = cvUrl;
+      link.download = "CV_Yasmine_Meite.pdf"; // Nom personnalisé pour le téléchargement
+      link.target = "_blank"; // Pour ouvrir dans un nouvel onglet si nécessaire
+
+      // Ajouter au DOM et déclencher le clic
+      document.body.appendChild(link);
+      link.click();
+
+      // Nettoyer
+      document.body.removeChild(link);
+
+      // Alternative: ouvrir dans un nouvel onglet pour prévisualisation
+      // window.open(cvUrl, '_blank');
+    } catch (err) {
+      console.error("Erreur lors du téléchargement du CV :", err);
+      alert("Impossible de télécharger le CV. Veuillez réessayer.");
+    }
+  };
+
+  // Vérifier que le fichier existe (optionnel)
+  const checkCVExists = async () => {
+    try {
+      const response = await fetch("/assets/doc/CV_yasmine.pdf");
+      if (!response.ok) {
+        console.warn("Le fichier CV n'existe pas à l'emplacement spécifié");
+      }
+    } catch (error) {
+      console.warn("Impossible de vérifier le fichier CV:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Vérifier l'existence du fichier au chargement
+    checkCVExists();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,10 +111,10 @@ export function Header() {
                   alt="Logo Portfolio"
                   className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 group-hover:scale-110"
                 />
-                <div className="absolute -inset-1 bg-linear-to-r from-[#c76140] to-[#ff8c47] rounded-full blur opacity-20 group-hover:opacity-30 transition-opacity"></div>{" "}
+                <div className="absolute -inset-1 bg-linear-to-r from-[#c76140] to-[#ff8c47] rounded-full blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
               </div>
 
-              <h3 className="text-black text-xl  md:text-2xl sm:text-xl  bg-linear-to-r from-[#c76140] to-[#ff6c17] bg-clip-text ">
+              <h3 className="text-black text-xl md:text-2xl sm:text-xl bg-linear-to-r from-[#c76140] to-[#ff6c17] bg-clip-text ">
                 Meite Yasmine
               </h3>
             </div>
@@ -89,10 +138,14 @@ export function Header() {
               ))}
             </div>
           </nav>
-          {/* Si version mobile le bouton apparait dans le menu verticale comme */}
-          <button className="hidden md:flex justify-center  items-center text-center w-35 h-9 text-white bg-[#c76141] rounded-lg">
-            {" "}
-            Télecharger CV
+
+          {/* Bouton Télécharger CV Desktop */}
+          <button
+            onClick={handleDownloadCV}
+            className="hidden md:flex justify-center items-center text-center w-35 h-9
+            text-white bg-[#c76141] rounded-lg cursor-pointer hover:bg-[#b55637] transition-colors"
+          >
+            Télécharger CV
           </button>
 
           {/* Hamburger Menu Button Mobile */}
@@ -121,78 +174,79 @@ export function Header() {
 
       {/* Navigation Mobile - Slide depuis la droite */}
       <div
-        className={`mobile-menu fixed  right-0 h-full w-75 max-w-sm bg-white/8 shadow-2xl z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`mobile-menu fixed right-0 h-full w-75 max-w-sm bg-white/8 shadow-2xl z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header du menu mobile */}
         <div className="flex items-center justify-between p-6 top text-center">
-          <h3 className="text-2xl  text-orange-500 text center ml-14px">
-            Menu
-          </h3>
+          <h3 className="text-2xl text-orange-500 text center ml-14px">Menu</h3>
           <button
             onClick={() => setIsMenuOpen(false)}
             className="p-2 rounded-lg transition-colors"
             aria-label="Close menu"
           >
-            <X className="w-6 h-6 text-white cursor-pointer " strokeWidth={3} />
+            <X className="w-6 h-6 text-white cursor-pointer" strokeWidth={3} />
           </button>
         </div>
 
-
         {/* Navigation Centré */}
-        <nav className="p-6 space-y-4 flex flex-col items-center">
+        <nav className="p-6 space-y-3 flex flex-col items-center">
           <ul className="space-y-1">
-            <li className="py-7 list-none flex items-center justify-start hover:bg-[#c76141]/40 h-9 rounded-lg">
-              <FaHome className="h-5 w-5 mr-4 text-orange-500 " />
+            <li className="py-4 list-none flex items-center justify-start">
+              <FaHome className="h-5 w-5 mr-4 text-orange-500" />
               <a href="/" className="text-white font-bold">
                 Accueil
               </a>
             </li>
 
-            <li className=" list-none flex items-center justify-start">
+            <li className="list-none flex items-center justify-start">
               <FaUser className="w-5 h-5 mr-4 text-orange-500" />
               <a href="/about" className="text-white font-bold">
                 À Propos
               </a>
             </li>
 
-            <li className=" py-5 list-none flex items-center justify-start">
+            <li className="py-5 list-none flex items-center justify-start">
               <FaBriefcase className="w-5 h-5 mr-4 text-orange-500" />
               <a href="/projet" className="text-white font-bold">
                 Projets
               </a>
             </li>
 
-            <li className=" list-none flex items-center justify-start">
-              <FaBookOpen className="w-5 h-5 mr-4 text-orange-500 " />
-              <a href="#" className="text-white font-bold">
+            <li className="list-none flex items-center justify-start">
+              <FaBookOpen className="w-5 h-5 mr-4 text-orange-500" />
+              <a href="/education" className="text-white font-bold">
                 Education
               </a>
             </li>
 
             <li className="py-5 list-none flex items-center justify-start">
-              <FaBuilding className="w-5 h-5 mr-4 text-orange-500 " />
-              <a href="#" className="text-white font-bold">
+              <FaBuilding className="w-5 h-5 mr-4 text-orange-500" />
+              <a href="/experience" className="text-white font-bold">
                 Expérience
               </a>
             </li>
 
             <li className="list-none flex items-center justify-start">
               <FaMailBulk className="w-5 h-5 mr-4 text-orange-500" />
-              <a href="#" className="text-white font-bold">
+              <a href="/contact" className="text-white font-bold">
                 Contact
               </a>
             </li>
           </ul>
 
-          <button className="w-full h-9 text-white font-bold bg-[#c76141] rounded-lg hover:bg-[#b55637] transition-colors mt-5">
+          {/* Bouton Télécharger CV Mobile */}
+          <button
+            onClick={handleDownloadCV}
+            className="w-full h-9 text-white font-bold bg-[#c76141] rounded-lg hover:bg-[#b55637] transition-colors mt-5"
+          >
             Télécharger CV
           </button>
         </nav>
 
         {/* Footer du menu mobile avec infos supplémentaires */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-100  from-[#ff6c17]/5 to-[#ff8c47]/5">
+        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-100 from-[#ff6c17]/5 to-[#ff8c47]/5">
           <p className="text-sm text-white text-center">
             © 2025 Mariama Yasmine Meite
           </p>

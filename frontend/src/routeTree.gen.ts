@@ -12,9 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as HomeRouteImport } from './routes/_home'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeProjetRouteImport } from './routes/_home/projet'
+import { Route as HomeExperienceRouteImport } from './routes/_home/experience'
 import { Route as HomeEducationRouteImport } from './routes/_home/education'
 import { Route as HomeContactRouteImport } from './routes/_home/contact'
-import { Route as HomeCertificatRouteImport } from './routes/_home/certificat'
 import { Route as HomeAboutRouteImport } from './routes/_home/about'
 
 const HomeRoute = HomeRouteImport.update({
@@ -31,6 +31,11 @@ const HomeProjetRoute = HomeProjetRouteImport.update({
   path: '/projet',
   getParentRoute: () => HomeRoute,
 } as any)
+const HomeExperienceRoute = HomeExperienceRouteImport.update({
+  id: '/experience',
+  path: '/experience',
+  getParentRoute: () => HomeRoute,
+} as any)
 const HomeEducationRoute = HomeEducationRouteImport.update({
   id: '/education',
   path: '/education',
@@ -39,11 +44,6 @@ const HomeEducationRoute = HomeEducationRouteImport.update({
 const HomeContactRoute = HomeContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => HomeRoute,
-} as any)
-const HomeCertificatRoute = HomeCertificatRouteImport.update({
-  id: '/certificat',
-  path: '/certificat',
   getParentRoute: () => HomeRoute,
 } as any)
 const HomeAboutRoute = HomeAboutRouteImport.update({
@@ -55,17 +55,17 @@ const HomeAboutRoute = HomeAboutRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof HomeAboutRoute
-  '/certificat': typeof HomeCertificatRoute
   '/contact': typeof HomeContactRoute
   '/education': typeof HomeEducationRoute
+  '/experience': typeof HomeExperienceRoute
   '/projet': typeof HomeProjetRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof HomeAboutRoute
-  '/certificat': typeof HomeCertificatRoute
   '/contact': typeof HomeContactRoute
   '/education': typeof HomeEducationRoute
+  '/experience': typeof HomeExperienceRoute
   '/projet': typeof HomeProjetRoute
 }
 export interface FileRoutesById {
@@ -73,9 +73,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_home': typeof HomeRouteWithChildren
   '/_home/about': typeof HomeAboutRoute
-  '/_home/certificat': typeof HomeCertificatRoute
   '/_home/contact': typeof HomeContactRoute
   '/_home/education': typeof HomeEducationRoute
+  '/_home/experience': typeof HomeExperienceRoute
   '/_home/projet': typeof HomeProjetRoute
 }
 export interface FileRouteTypes {
@@ -83,20 +83,20 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/certificat'
     | '/contact'
     | '/education'
+    | '/experience'
     | '/projet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/certificat' | '/contact' | '/education' | '/projet'
+  to: '/' | '/about' | '/contact' | '/education' | '/experience' | '/projet'
   id:
     | '__root__'
     | '/'
     | '/_home'
     | '/_home/about'
-    | '/_home/certificat'
     | '/_home/contact'
     | '/_home/education'
+    | '/_home/experience'
     | '/_home/projet'
   fileRoutesById: FileRoutesById
 }
@@ -128,6 +128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeProjetRouteImport
       parentRoute: typeof HomeRoute
     }
+    '/_home/experience': {
+      id: '/_home/experience'
+      path: '/experience'
+      fullPath: '/experience'
+      preLoaderRoute: typeof HomeExperienceRouteImport
+      parentRoute: typeof HomeRoute
+    }
     '/_home/education': {
       id: '/_home/education'
       path: '/education'
@@ -142,13 +149,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeContactRouteImport
       parentRoute: typeof HomeRoute
     }
-    '/_home/certificat': {
-      id: '/_home/certificat'
-      path: '/certificat'
-      fullPath: '/certificat'
-      preLoaderRoute: typeof HomeCertificatRouteImport
-      parentRoute: typeof HomeRoute
-    }
     '/_home/about': {
       id: '/_home/about'
       path: '/about'
@@ -161,17 +161,17 @@ declare module '@tanstack/react-router' {
 
 interface HomeRouteChildren {
   HomeAboutRoute: typeof HomeAboutRoute
-  HomeCertificatRoute: typeof HomeCertificatRoute
   HomeContactRoute: typeof HomeContactRoute
   HomeEducationRoute: typeof HomeEducationRoute
+  HomeExperienceRoute: typeof HomeExperienceRoute
   HomeProjetRoute: typeof HomeProjetRoute
 }
 
 const HomeRouteChildren: HomeRouteChildren = {
   HomeAboutRoute: HomeAboutRoute,
-  HomeCertificatRoute: HomeCertificatRoute,
   HomeContactRoute: HomeContactRoute,
   HomeEducationRoute: HomeEducationRoute,
+  HomeExperienceRoute: HomeExperienceRoute,
   HomeProjetRoute: HomeProjetRoute,
 }
 

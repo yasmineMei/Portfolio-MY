@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 
 import Background from "../images/background.jpg";
 import Profile from "../images/profile.jpg";
+import Profile2 from "../images/profile2.jpeg"
 import React from "../images/react.png";
 import Mongo from "../images/mongo.png";
 import Prisma from "../images/prisma.png";
@@ -135,7 +136,7 @@ function RouteComponent() {
                   <div className="relative mx-auto w-fit">
                     <div className="absolute -inset-4 bg-gradient-to-r from-[#c76140] to-orange-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
                     <img
-                      src={Profile}
+                      src={Profile2}
                       alt="Meite Yasmine"
                       className="relative w-64 h-64 rounded-full object-cover shadow-2xl border-8 border-white"
                     />
@@ -355,7 +356,7 @@ function RouteComponent() {
 
           {/* Section Mon approche */}
           <section className="py-20 px-4 bg-white">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-6">
               {/* Titre de section */}
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
