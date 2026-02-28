@@ -10,9 +10,8 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  FaGraduationCap,
+
   FaCertificate,
-  FaAward,
   FaUniversity,
   FaSchool,
   FaCalendarAlt,
@@ -302,7 +301,7 @@ function RouteComponent() {
               </div>
             </div>
             <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
-              <div className="text-4xl font-bold text-[#c76140] mb-2">15+</div>
+              <div className="text-4xl font-bold text-[#c76140] mb-2">6+</div>
               <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                 Projets réalisés
               </div>
@@ -311,39 +310,7 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Section CTA */}
-      <section className="w-full px-4 py-16 md:py-20 bg-gradient-to-br from-[#c76140] to-orange-500">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Intéressé par mon profil ?
-          </h2>
-          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-            Téléchargez mon CV complet ou contactez-moi pour discuter de vos
-            projets.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#c76140] rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg group">
-              <span>Télécharger mon CV</span>
-              <svg
-                className="w-5 h-5 ml-2 group-hover:translate-y-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-            </button>
-            <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white hover:text-[#c76140] transition-all duration-300">
-              Me Contacter
-            </button>
-          </div>
-        </div>
-      </section>
+     
     </main>
   );
 }

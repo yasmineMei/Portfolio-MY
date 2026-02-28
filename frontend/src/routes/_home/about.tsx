@@ -18,6 +18,8 @@ import {
   FaHeart,
 } from "react-icons/fa";
 
+import { Link } from "@tanstack/react-router";
+
 // Importez votre photo de profil
 import Profile from "@/images/profile.jpg";
 
@@ -86,7 +88,7 @@ function RouteComponent() {
               {/* Stats rapides */}
               <div className="grid grid-cols-3 gap-4 pt-4">
                 <div className="text-center p-4 bg-linear-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl">
-                  <p className="text-3xl font-bold text-[#c76140]">15+</p>
+                  <p className="text-3xl font-bold text-[#c76140]">6+</p>
                   <p className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                     Projets
                   </p>
@@ -97,12 +99,7 @@ function RouteComponent() {
                     Années
                   </p>
                 </div>
-                <div className="text-center p-4 bg-linear-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl">
-                  <p className="text-3xl font-bold text-[#c76140]">10+</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                    Clients
-                  </p>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -368,34 +365,7 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Section CTA */}
-      <section className="w-full px-4 py-20 bg-gradient-to-br from-[#c76140] to-orange-500">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Travaillons Ensemble
-          </h2>
-          <p className="text-white/90 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Vous avez un projet en tête ? Discutons de vos besoins et créons
-            ensemble quelque chose d'exceptionnel.
-          </p>
-          <button className="inline-flex items-center px-8 py-4 bg-white text-[#c76140] rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl group">
-            <span>Me Contacter</span>
-            <svg
-              className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </button>
-        </div>
-      </section>
+      
     </main>
   );
 }

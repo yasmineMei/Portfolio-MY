@@ -39,8 +39,8 @@ function RouteComponent() {
       company: "TOPECI",
       position: "Développeuse Full-Stack",
       location: "Abidjan, Côte d'Ivoire",
-      period: "2024 - Présent",
-      type: "CDI",
+      period: "2025 - Présent",
+      type: "Stage",
       description:
         "Développement d'une plateforme e-commerce complète dédiée à la promotion et à la préservation du patrimoine culturel africain à travers des produits éducatifs innovants.",
       achievements: [
@@ -64,7 +64,7 @@ function RouteComponent() {
       company: "Clinique Médicale Eniazou",
       position: "Stagiaire Développeuse",
       location: "Abidjan, Côte d'Ivoire",
-      period: "2023 - 2024",
+      period: "2025",
       type: "Stage",
       description:
         "Contribution à la digitalisation des processus de la clinique avec développement d'outils de gestion modernes pour les patients et le personnel médical.",
@@ -113,17 +113,14 @@ function RouteComponent() {
       {/* Section Hero */}
       <section className="w-full px-4 py-16 md:py-20 lg:py-24">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#c76140] to-orange-500 rounded-2xl mb-6">
-            <FaBriefcase className="text-white w-10 h-10" />
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+          
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Mon <span className="text-[#c76140]">Expérience</span>
           </h1>
 
           <div className="w-20 h-1 bg-[#c76140] mx-auto rounded-full mb-6"></div>
 
-          <p className="text-gray-600 dark:text-gray-300 font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
+          <p className="text-white dark:text-gray-300 font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
             Parcours professionnel marqué par des projets concrets et des
             contributions significatives dans le développement web et mobile.
           </p>
@@ -131,7 +128,7 @@ function RouteComponent() {
       </section>
 
       {/* Section Expériences Professionnelles */}
-      <section className="w-full px-4 py-12 md:py-16 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+      <section className="w-full px-4 py-12 md:py-16 bg-linear-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -152,7 +149,7 @@ function RouteComponent() {
                 {/* En-tête */}
                 <div className="flex items-start justify-between mb-6">
                   <div
-                    className={`w-16 h-16 bg-gradient-to-br ${exp.color} rounded-xl flex items-center justify-center flex-shrink-0`}
+                    className={`w-16 h-16 bg-linear-to-br ${exp.color} rounded-xl flex items-center justify-center shrink-0`}
                   >
                     <FaBriefcase className="text-white w-8 h-8" />
                   </div>
@@ -197,7 +194,7 @@ function RouteComponent() {
                     {exp.achievements.map((achievement, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <div
-                          className={`w-1.5 h-1.5 bg-gradient-to-br ${exp.color} rounded-full mt-2 flex-shrink-0`}
+                          className={`w-1.5 h-1.5 bg-linear-to-br ${exp.color} rounded-full mt-2 shrink-0`}
                         ></div>
                         <span className="text-sm text-gray-600 dark:text-gray-300">
                           {achievement}
@@ -251,7 +248,7 @@ function RouteComponent() {
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-800/50 
+                className="bg-linear-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-800/50 
                    rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 
                    hover:-translate-y-2 border border-gray-100 dark:border-gray-700 relative"
               >
@@ -308,71 +305,9 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Section Stats */}
-      <section className="w-full px-4 py-12 md:py-16 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
-              <div className="text-4xl font-bold text-[#c76140] mb-2">3+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Années d'expérience
-              </div>
-            </div>
-            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
-              <div className="text-4xl font-bold text-[#c76140] mb-2">2</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Entreprises
-              </div>
-            </div>
-            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
-              <div className="text-4xl font-bold text-[#c76140] mb-2">15+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Projets réalisés
-              </div>
-            </div>
-            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
-              <div className="text-4xl font-bold text-[#c76140] mb-2">100%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Satisfaction client
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
-      {/* Section CTA */}
-      <section className="w-full px-4 py-16 md:py-20 bg-gradient-to-br from-[#c76140] to-orange-500">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Vous avez un projet en tête ?
-          </h2>
-          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-            Discutons de vos besoins et créons ensemble quelque chose
-            d'exceptionnel.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#c76140] rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg group">
-              <span>Me Contacter</span>
-              <svg
-                className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </button>
-            <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white hover:text-[#c76140] transition-all duration-300">
-              Télécharger mon CV
-            </button>
-          </div>
-        </div>
-      </section>
+      
     </main>
   );
 }

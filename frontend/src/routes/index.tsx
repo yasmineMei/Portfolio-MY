@@ -8,7 +8,7 @@
  * Utilisation des composants Header et Footer pour la navigation et les informations de bas de page.
  */
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
@@ -32,6 +32,48 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   const [, /*isVisible*/ setIsVisible] = useState(false);
+
+  const handleDownloadCV = () => {
+    try {
+      // IMPORTANT: Si votre fichier est dans le dossier public/
+      // Il faut le mettre dans public/ et y accéder directement sans /public
+
+      // Option 1: Téléchargement direct (si fichier dans public/)
+      const cvUrl = "/assets/doc/CV_yasmine_compressed.pdf";
+
+      // Option 2: Alternative si dans un sous-dossier
+      // const cvUrl = "/doc/CV_yasmine_compressed.pdf";
+
+      console.log("Tentative de téléchargement depuis:", cvUrl);
+
+      // Créer un lien temporaire
+      const link = document.createElement("a");
+      link.href = cvUrl;
+      link.download = "CV_Yasmine_Meite_Developpeuse_Fullstack.pdf";
+      link.target = "_blank"; // Permet la prévisualisation dans un nouvel onglet
+
+      // Pour forcer le téléchargement sans prévisualisation
+      // link.setAttribute('download', 'CV_Yasmine_Meite.pdf');
+
+      // Ajouter au DOM et déclencher le clic
+      document.body.appendChild(link);
+      link.click();
+
+      // Nettoyer
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
+
+      // Option alternative: ouvrir dans un nouvel onglet pour prévisualisation
+      // window.open(cvUrl, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.error("Erreur lors du téléchargement du CV :", err);
+      // Message d'erreur plus informatif
+      alert(
+        "Impossible de télécharger le CV. Vérifiez que le fichier existe à l'emplacement : /public/assets/doc/CV_yasmine_compressed.pdf",
+      );
+    }
+  };
 
   useEffect(() => {
     setIsVisible(true);
@@ -186,11 +228,14 @@ function RouteComponent() {
 
                   {/* Boutons */}
                   <div className="flex flex-wrap gap-4 pt-4">
-                    <button className="inline-flex items-center px-8 py-4 rounded-xl bg-[#c76140] text-white font-semibold hover:bg-[#b15438] hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                      Télécharger mon CV
+                    <button
+                      onClick={handleDownloadCV}
+                      className="inline-flex items-center px-8 py-4 rounded-xl bg-[#c76140] text-white font-semibold hover:bg-[#b15438] hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      <span className="font-semibold">Télécharger CV</span>
                     </button>
                     <button className="inline-flex items-center px-8 py-4 rounded-xl border-2 border-gray-300 text-gray-700 font-semibold hover:border-[#c76140] hover:text-[#c76140] transition-all duration-300">
-                      Voir mes projets
+                      <Link to="/projet">Voir mes projets</Link>
                     </button>
                   </div>
                 </div>
@@ -334,7 +379,10 @@ function RouteComponent() {
 
               {/* Bouton Voir tous les projets */}
               <div className="text-center mt-12">
-                <button className="inline-flex items-center px-8 py-4 rounded-xl bg-[#c76140] text-white font-semibold hover:bg-[#b15438] hover:scale-105 transition-all duration-300 shadow-lg group">
+                <Link
+                  to="/projet"
+                  className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-[#c76140] text-white font-semibold hover:bg-[#b15438] hover:scale-105 transition-all duration-300 shadow-lg group"
+                >
                   <span>Voir tous mes projets</span>
                   <svg
                     className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -349,7 +397,7 @@ function RouteComponent() {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
           </section>
@@ -628,22 +676,25 @@ function RouteComponent() {
                 innovantes et performantes.
               </p>
 
-              <button className="inline-flex items-center px-8 py-4 bg-[#c76140] text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl group">
-                <span>Me Contacter</span>
-                <svg
-                  className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </button>
+              <Link 
+  to="/contact"
+  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#c76140] text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl group"
+>
+  <span>Me Contacter</span>
+  <svg
+    className="w-6 h-6 group-hover:translate-x-1 transition-transform"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M17 8l4 4m0 0l-4 4m4-4H3"
+    />
+  </svg>
+</Link>
             </div>
           </section>
         </main>

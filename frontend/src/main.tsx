@@ -3,6 +3,9 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import "./index.css";
 
+// 1. Importe ton AuthProvider
+import { AuthProvider } from "./contexts/AuthContext";
+
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
@@ -16,14 +19,15 @@ declare module "@tanstack/react-router" {
   }
 }
 
-// Render the app
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      {/* Votre application */}
-      <RouterProvider router={router} />
-    </StrictMode>
+      {/* 2. Enveloppe le RouterProvider avec l'AuthProvider */}
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </StrictMode>,
   );
 }

@@ -9,16 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HomeRouteImport } from './routes/_home'
+import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeProjetRouteImport } from './routes/_home/projet'
 import { Route as HomeExperienceRouteImport } from './routes/_home/experience'
 import { Route as HomeEducationRouteImport } from './routes/_home/education'
 import { Route as HomeContactRouteImport } from './routes/_home/contact'
 import { Route as HomeAboutRouteImport } from './routes/_home/about'
+import { Route as AdminUserRouteImport } from './routes/_admin/user'
+import { Route as AdminProjectRouteImport } from './routes/_admin/project'
+import { Route as AdminMessagesRouteImport } from './routes/_admin/messages'
+import { Route as AdminDashboardRouteImport } from './routes/_admin/dashboard'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/_home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -51,9 +66,34 @@ const HomeAboutRoute = HomeAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => HomeRoute,
 } as any)
+const AdminUserRoute = AdminUserRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProjectRoute = AdminProjectRouteImport.update({
+  id: '/project',
+  path: '/project',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMessagesRoute = AdminMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof AdminDashboardRoute
+  '/messages': typeof AdminMessagesRoute
+  '/project': typeof AdminProjectRoute
+  '/user': typeof AdminUserRoute
   '/about': typeof HomeAboutRoute
   '/contact': typeof HomeContactRoute
   '/education': typeof HomeEducationRoute
@@ -62,6 +102,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof AdminDashboardRoute
+  '/messages': typeof AdminMessagesRoute
+  '/project': typeof AdminProjectRoute
+  '/user': typeof AdminUserRoute
   '/about': typeof HomeAboutRoute
   '/contact': typeof HomeContactRoute
   '/education': typeof HomeEducationRoute
@@ -71,7 +116,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
   '/_home': typeof HomeRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_admin/dashboard': typeof AdminDashboardRoute
+  '/_admin/messages': typeof AdminMessagesRoute
+  '/_admin/project': typeof AdminProjectRoute
+  '/_admin/user': typeof AdminUserRoute
   '/_home/about': typeof HomeAboutRoute
   '/_home/contact': typeof HomeContactRoute
   '/_home/education': typeof HomeEducationRoute
@@ -82,17 +133,39 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
+    | '/dashboard'
+    | '/messages'
+    | '/project'
+    | '/user'
     | '/about'
     | '/contact'
     | '/education'
     | '/experience'
     | '/projet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/education' | '/experience' | '/projet'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/messages'
+    | '/project'
+    | '/user'
+    | '/about'
+    | '/contact'
+    | '/education'
+    | '/experience'
+    | '/projet'
   id:
     | '__root__'
     | '/'
+    | '/_admin'
     | '/_home'
+    | '/login'
+    | '/_admin/dashboard'
+    | '/_admin/messages'
+    | '/_admin/project'
+    | '/_admin/user'
     | '/_home/about'
     | '/_home/contact'
     | '/_home/education'
@@ -102,16 +175,32 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   HomeRoute: typeof HomeRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_home': {
       id: '/_home'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -156,8 +245,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeAboutRouteImport
       parentRoute: typeof HomeRoute
     }
+    '/_admin/user': {
+      id: '/_admin/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof AdminUserRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/project': {
+      id: '/_admin/project'
+      path: '/project'
+      fullPath: '/project'
+      preLoaderRoute: typeof AdminProjectRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/messages': {
+      id: '/_admin/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/dashboard': {
+      id: '/_admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminMessagesRoute: typeof AdminMessagesRoute
+  AdminProjectRoute: typeof AdminProjectRoute
+  AdminUserRoute: typeof AdminUserRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminMessagesRoute: AdminMessagesRoute,
+  AdminProjectRoute: AdminProjectRoute,
+  AdminUserRoute: AdminUserRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface HomeRouteChildren {
   HomeAboutRoute: typeof HomeAboutRoute
@@ -179,7 +312,9 @@ const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   HomeRoute: HomeRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
