@@ -2,17 +2,17 @@ import {
   createContext,
   useContext,
   useState,
-  type ReactNode,
+  ReactNode,
   useCallback,
 } from "react";
 
+// 1. Définition des types
 interface User {
   id?: string;
   name: string;
   email: string;
   role: string;
 }
-
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
@@ -23,66 +23,44 @@ interface AuthContextType {
   logout: () => void;
 }
 
+// 2. Création du contexte
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
+// 3. Le Provider
 export function AuthProvider({ children }: { children: ReactNode }) {
-  // Regrouper l'initialisation pour éviter les désynchronisations
   const [authState, setAuthState] = useState<{
     user: User | null;
     token: string | null;
   }>(() => {
-    try {
-      const savedUser = localStorage.getItem("user");
-      const savedToken = localStorage.getItem("token");
-      return {
-        user: savedUser ? JSON.parse(savedUser) : null,
-        token: savedToken || null,
-      };
-    } catch (error) {
-      console.error("Erreur lecture localStorage:", error);
-      return { user: null, token: null };
-    }
+    const savedUser = localStorage.getItem("user");
+    const savedToken = localStorage.getItem("token");
+    return {
+      user: savedUser ? JSON.parse(savedUser) : null,
+      token: savedToken || null,
+    };
   });
 
-  const login = async (
-    email: string,
-    password: string,
-  ): Promise<{ success: boolean; message?: string }> => {
+  const login = async (email: string, password: string) => {
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
       const data = await response.json();
+      if (!response.ok) return { success: false, message: data.message };
 
-      if (!response.ok) {
-        return {
-          success: false,
-          message: data.message || "Identifiants invalides",
-        };
-      }
-
-      // Mise à jour atomique de l'état
-      const userData = data.user;
-      const token = data.token;
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(userData));
-
-      setAuthState({ user: userData, token });
-
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setAuthState({ user: data.user, token: data.token });
       return { success: true };
     } catch (error) {
-      console.error("Erreur réseau login:", error);
-      return { success: false, message: "Le serveur ne répond pas" };
+      return { success: false, message: "Erreur serveur" };
     }
   };
 
-  // Utilisation de useCallback pour éviter des re-rendus inutiles
   const logout = useCallback(() => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -92,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: !!authState.token, // Déduit du token
+        isAuthenticated: !!authState.token,
         user: authState.user,
         login,
         logout,
@@ -103,10 +81,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// 4. Le Hook (À EXPORTER EN DERNIER)
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 }

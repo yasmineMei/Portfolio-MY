@@ -35,39 +35,50 @@ function RouteComponent() {
     }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+ const handleSubmit = async (e: FormEvent) => {
+   e.preventDefault();
+   setIsSubmitting(true);
 
-    // Simulation d'envoi de formulaire avec timeout
-    try {
-      // Ici vous pourriez appeler une API réelle
-      // Exemple: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) })
+   try {
+     const response = await fetch("http://localhost:5000/api/messages", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({
+         name: formData.name,
+         email: formData.email,
+         subject: formData.subject,
+         message: formData.message,
+       }),
+     });
 
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulation délai réseau
+     const data = await response.json();
 
-      console.log("Formulaire envoyé:", formData);
-      setSubmitSuccess(true);
+     if (!response.ok) {
+       throw new Error(data.message || "Erreur lors de l'envoi");
+     }
 
-      // Réinitialiser le formulaire après succès
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+     // Succès
+     setSubmitSuccess(true);
+     setFormData({
+       name: "",
+       email: "",
+       subject: "",
+       message: "",
+     });
 
-      // Cacher le message de succès après 5 secondes
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
-    } catch (error) {
-      console.error("Erreur lors de l'envoi:", error);
-      alert("Une erreur est survenue. Veuillez réessayer.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+     // Cacher le message de succès après 5 secondes
+     setTimeout(() => setSubmitSuccess(false), 5000);
+   } catch (error) {
+     console.error("Erreur lors de l'envoi:", error);
+     alert(
+       "Impossible d'envoyer le message. Vérifiez que le serveur est lancé.",
+     );
+   } finally {
+     setIsSubmitting(false);
+   }
+ };
 
   const isFormValid = () => {
     return (

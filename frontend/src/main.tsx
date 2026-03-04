@@ -6,8 +6,12 @@ import "./index.css";
 // 1. Importe ton AuthProvider
 import { AuthProvider } from "./contexts/AuthContext";
 
+// 1. Importe ton DataProvider
+import { DataProvider } from "./contexts/DataContext";
+
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -24,9 +28,10 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      {/* 2. Enveloppe le RouterProvider avec l'AuthProvider */}
       <AuthProvider>
-        <RouterProvider router={router} />
+        <DataProvider>
+          <RouterProvider router={router} />
+        </DataProvider>
       </AuthProvider>
     </StrictMode>,
   );

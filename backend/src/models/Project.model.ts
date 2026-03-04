@@ -12,7 +12,7 @@ export interface IProject extends Document {
   liveUrl?: string;
   githubUrl?: string;
   featured: boolean;
-  order: number;
+  order: number; // l'attribut 'order' pour gérer l'ordre d'affichage des projets
   createdAt: Date;
   updatedAt: Date;
 }
